@@ -8,8 +8,9 @@ public class Main {
       PropertyParameter property = new PropertyParameter("property/display.properties");
       int windowWidth = property.getWindowWidth();
       int windowHeight = property.getWindowHeight();
+      String message = property.getMessage();
 
-      JFrame frame = new MyFrame("Test", windowWidth, windowHeight);
+      JFrame frame = new MyFrame("Test");
       frame.setVisible(true);
    }
 }

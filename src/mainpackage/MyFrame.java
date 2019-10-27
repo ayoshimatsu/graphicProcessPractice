@@ -1,24 +1,44 @@
 package mainpackage;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class MyFrame extends JFrame{
 
-   public MyFrame(String title, int width, int height) {
+   PropertyParameter property = new PropertyParameter("property/display.properties");
+
+   public MyFrame(String title) {
       super(title);
       setDefaultCloseOperation(EXIT_ON_CLOSE);
-      setSize(width,height);
+      int windowWidth = property.getWindowWidth();
+      int windowHeight = property.getWindowHeight();
+      setSize(windowWidth,windowHeight);
       setLocationRelativeTo(null);
       setResizable(false);
-      this.add(new DrawCanvas());
+
+      setMessagePanel(property.getMessage());
+
    }
 
-   public class DrawCanvas extends JPanel{
-      @Override
-      protected void paintComponent(Graphics g) {
-         super.paintComponent(g);
-         g.drawLine(0,0,200,200);
+   public void setMessagePanel(String message){
+      MessagePanel panel = new MessagePanel(message);
+      getContentPane().add(panel, BorderLayout.CENTER);
+   }
+
+
+   public class MessagePanel extends JPanel{
+      public MessagePanel(String message) {
+         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+
+         JLabel messageLabel = new JLabel();
+         messageLabel.setMaximumSize(new Dimension(Short.MAX_VALUE, Short.MAX_VALUE));
+         messageLabel.setFont(new Font("Arial", Font.BOLD, 50));
+         messageLabel.setForeground(Color.RED);
+         messageLabel.setOpaque(true);
+         messageLabel.setBackground(Color.YELLOW);
+         messageLabel.setText(message);
+         this.add(messageLabel);
       }
    }
 }
